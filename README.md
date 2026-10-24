@@ -1,6 +1,6 @@
-# First Meal site
+# First Spoon site
 
-The support page, the privacy policy, the shared shopping list page and the recipe pages for the First Meal iOS app. Deployed to GitHub Pages by the workflow on every push to `main`.
+The support page, the privacy policy, the shared shopping list page and the recipe pages for the First Spoon iOS app. Deployed to GitHub Pages by the workflow on every push to `main`.
 
 - `index.html`, `privacy.html`: support and privacy.
 - `list.html`: a shopping list shared from the app; the list travels in the link's fragment and the ticks stay in the browser. Nothing is sent anywhere.
