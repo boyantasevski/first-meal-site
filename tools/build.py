@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the recipe pages and the share-card images for the First Spoon site.
+"""Build the recipe pages and the share-card images for the First Meal site.
 
 Usage:
   python3 tools/build.py [--photos "/path/to/Assets/Food photos/dishes"]
@@ -17,7 +17,7 @@ from PIL import Image
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = "https://boyantasevski.github.io/first-spoon-site"
+SITE = "https://boyantasevski.github.io/first-meal-site"
 DATA = ROOT / "data" / "plan-and-recipes.json"
 
 STAGE = {"FT": ("First tastes", "from 6 months"), "S1": ("Stage 1", "from 6 months"),
@@ -67,10 +67,10 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>{title} — First Spoon</title>
+<title>{title} — First Meal</title>
 <meta name="description" content="{desc}">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="First Spoon">
+<meta property="og:site_name" content="First Meal">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
@@ -118,7 +118,7 @@ PAGE = """<!doctype html>
 </head>
 <body>
 <main>
-  <p class="brand">First Spoon · Recipe</p>
+  <p class="brand">First Meal · Recipe</p>
 {hero}  <p class="stage">{stage}</p>
   <h1>{title}</h1>
   <p class="facts">{facts}</p>
@@ -129,8 +129,8 @@ PAGE = """<!doctype html>
   <h2 class="section">Method{step_count}</h2>
   <ol class="steps">
 {steps}  </ol>
-{note}  <div class="cta"><b>Made with First Spoon</b>A daily plan for your baby, from the first taste of solid food to the family table at two: what to cook, what comes from the freezer, and when a new allergen is introduced. <a href="../index.html">About First Spoon</a></div>
-  <p class="foot">First Spoon follows NHS guidance on <a href="{src_avoid}">foods to avoid</a>, <a href="{src_allergy}">food allergies</a> and <a href="{src_hygiene}">preparing and freezing baby food</a>. It is not medical advice: if your baby has a health condition or a diagnosed allergy, follow your doctor's advice.</p>
+{note}  <div class="cta"><b>Made with First Meal</b>A daily plan for your baby, from the first taste of solid food to the family table at two: what to cook, what comes from the freezer, and when a new allergen is introduced. <a href="../index.html">About First Meal</a></div>
+  <p class="foot">First Meal follows NHS guidance on <a href="{src_avoid}">foods to avoid</a>, <a href="{src_allergy}">food allergies</a> and <a href="{src_hygiene}">preparing and freezing baby food</a>. It is not medical advice: if your baby has a health condition or a diagnosed allergy, follow your doctor's advice.</p>
 </main>
 </body>
 </html>
@@ -143,7 +143,7 @@ def build_page(r, names, sources, has_photo):
     if r.get("t"):
         desc_bits.append(f"{r['t']} min")
     desc_bits.append(allergen_text(r, names))
-    desc = " · ".join(desc_bits) + ". A First Spoon recipe."
+    desc = " · ".join(desc_bits) + ". A First Meal recipe."
     hero = f'  <figure class="hero"><img src="../img/dishes/{r["id"]}.png" alt=""></figure>\n' if has_photo else ""
     info = ""
     if r.get("info"):
@@ -270,11 +270,11 @@ def main():
         if has_photo:
             import base64
             img = "data:image/png;base64," + base64.b64encode((dishes / f"{r['id']}.png").read_bytes()).decode()
-            body = f'<div class="photo"><img src="{img}"></div><div class="brand">First Spoon · Recipe</div>'
+            body = f'<div class="photo"><img src="{img}"></div><div class="brand">First Meal · Recipe</div>'
         else:
-            body = f'<div class="brand">First Spoon · Recipe</div><div class="name">{esc(r["n"])}</div><div class="sub">{esc(stage_line(r))}</div>'
+            body = f'<div class="brand">First Meal · Recipe</div><div class="name">{esc(r["n"])}</div><div class="sub">{esc(stage_line(r))}</div>'
         og_pages.append((r["id"], body))
-    og_pages.append(("list", f'<div class="basket">{BASKET_SVG}</div><div class="brand">First Spoon · Shopping list</div><div class="sub">Tick things off as you shop</div>'))
+    og_pages.append(("list", f'<div class="basket">{BASKET_SVG}</div><div class="brand">First Meal · Shopping list</div><div class="sub">Tick things off as you shop</div>'))
     if not args.no_og:
         render_og(og_pages, ROOT / "img" / "og")
     print(f"{len(recipes)} recipe pages, {with_photo} with a photo, {len(og_pages)} share cards")
